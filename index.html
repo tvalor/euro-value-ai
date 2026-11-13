@@ -1,0 +1,83 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#0b1220">
+  <meta name="description" content="EURO VALUE AI - análisis de acciones europeas">
+  <link rel="manifest" href="manifest.webmanifest">
+  <title>EURO VALUE AI</title>
+  <style>
+    :root{color-scheme:dark;--bg:#0b1220;--panel:#121d30;--panel2:#17243a;--line:#263650;--txt:#edf3ff;--muted:#9aabc4;--accent:#67e8c2;--blue:#7aa7ff}
+    *{box-sizing:border-box}body{margin:0;background:linear-gradient(140deg,#0b1220,#101b2e);color:var(--txt);font:15px/1.5 system-ui,-apple-system,Segoe UI,sans-serif}
+    header{padding:24px max(20px,calc((100% - 1180px)/2));border-bottom:1px solid var(--line);display:flex;align-items:center;justify-content:space-between;gap:16px}
+    .brand{font-size:20px;font-weight:800;letter-spacing:.08em}.brand span{color:var(--accent)}.sub{color:var(--muted);font-size:12px}
+    main{max-width:1180px;margin:28px auto;padding:0 20px}.nav{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:24px}
+    button,.tab{border:1px solid var(--line);background:var(--panel);color:var(--txt);padding:10px 15px;border-radius:10px;cursor:pointer}
+    button.active,.tab.active{background:#183b43;border-color:#2d897c;color:#b9ffeb}
+    .grid{display:grid;grid-template-columns:repeat(12,1fr);gap:16px}.card{background:linear-gradient(145deg,var(--panel),#101a2b);border:1px solid var(--line);border-radius:16px;padding:20px;min-width:0}
+    .span-12{grid-column:span 12}.span-8{grid-column:span 8}.span-6{grid-column:span 6}.span-4{grid-column:span 4}
+    h1{font-size:30px;margin:0 0 8px}h2{font-size:18px;margin:0 0 14px}p{color:var(--muted);margin:6px 0}
+    .metric{font-size:28px;font-weight:750;margin-top:8px}.tag{display:inline-block;border:1px solid #2b5b58;color:var(--accent);padding:3px 8px;border-radius:99px;font-size:11px}
+    label{display:block;color:var(--muted);font-size:13px;margin:12px 0 5px}input,select{width:100%;padding:11px;border-radius:9px;border:1px solid var(--line);background:#0b1424;color:var(--txt)}
+    .row{display:grid;grid-template-columns:repeat(2,1fr);gap:12px}.primary{background:#1b6c60;border-color:#2c9a87;font-weight:700}
+    .muted{font-size:12px;color:var(--muted)}.notice{border-left:3px solid #e5b45e;padding:10px 13px;background:#2b251b;border-radius:7px;color:#e8d5ad;font-size:13px}
+    table{width:100%;border-collapse:collapse}td,th{text-align:left;padding:10px;border-bottom:1px solid var(--line)}th{color:var(--muted);font-size:12px}
+    .hidden{display:none}.positive{color:var(--accent)}footer{max-width:1180px;margin:30px auto;padding:0 20px 30px;color:var(--muted);font-size:12px}
+    @media(max-width:760px){header{align-items:flex-start;flex-direction:column}.span-8,.span-6,.span-4{grid-column:span 12}.row{grid-template-columns:1fr}h1{font-size:25px}}
+  </style>
+</head>
+<body>
+<header><div><div class="brand">EURO <span>VALUE</span> AI</div><div class="sub">European equity research workspace</div></div><span class="tag">VERSIÓN INICIAL · DEMO</span></header>
+<main>
+  <nav class="nav" aria-label="Navegación">
+    <button class="active" data-page="home">Inicio</button><button data-page="analyzer">Analizador</button><button data-page="fair">Fair Value</button><button data-page="portfolio">Mi cartera</button>
+  </nav>
+  <section id="home" class="page">
+    <div class="card span-12" style="margin-bottom:16px"><h1>Invierte con método en Europa.</h1><p>Un espacio personal para analizar empresas, estimar valor razonable y seguir oportunidades en renta variable europea.</p></div>
+    <div class="grid">
+      <div class="card span-4"><div class="muted">Universo inicial</div><div class="metric">Europa</div><p>Prioridad eurozona</p></div>
+      <div class="card span-4"><div class="muted">Estilos de inversión</div><div class="metric">2</div><p>Value Investing · Tech & Growth</p></div>
+      <div class="card span-4"><div class="muted">Horizonte de análisis</div><div class="metric">3–6 m</div><p>Con foco en catalizadores y valoración</p></div>
+      <div class="card span-12"><h2>Módulos previstos</h2><p>Analizador de acciones · Valor razonable · Mi cartera · Oportunidades · Asistente de análisis</p><p class="muted">Esta primera versión es una estructura visual. Todavía no consulta cotizaciones ni estados financieros reales.</p></div>
+    </div>
+  </section>
+  <section id="analyzer" class="page hidden">
+    <div class="card"><h1>Analizador de acciones</h1><p>Introduce una empresa o ticker para preparar su análisis.</p>
+      <div class="row"><div><label for="ticker">Empresa / ticker</label><input id="ticker" placeholder="Ej. ASML, SAP, BESI"></div><div><label for="style">Estilo</label><select id="style"><option>Value Investing</option><option>Tech & Growth</option></select></div></div>
+      <button class="primary" style="margin-top:15px" onclick="preparePrompt()">Preparar análisis</button><p id="promptResult" class="muted"></p>
+      <div class="notice" style="margin-top:16px">Los datos financieros y las conclusiones deben verificarse con fuentes fiables. No se generan datos reales en esta versión.</div>
+    </div>
+  </section>
+  <section id="fair" class="page hidden">
+    <div class="card"><h1>Estimación de Fair Value</h1><p>Modelo DCF simplificado de demostración. Cambia los supuestos para ver cómo afectan al resultado.</p>
+      <div class="row"><div><label>Flujo de caja libre inicial (€ millones)</label><input id="fcf" type="number" value="100"></div><div><label>Crecimiento anual (%)</label><input id="growth" type="number" value="8"></div><div><label>Tasa de descuento (%)</label><input id="discount" type="number" value="10"></div><div><label>Crecimiento terminal (%)</label><input id="terminal" type="number" value="2"></div></div>
+      <button class="primary" style="margin-top:15px" onclick="calculateDCF()">Calcular estimación</button><div class="metric" id="dcfResult">—</div><p class="muted">Valor empresarial indicativo (€ millones), no es una recomendación ni una valoración completa.</p>
+    </div>
+  </section>
+  <section id="portfolio" class="page hidden">
+    <div class="card"><h1>Mi cartera</h1><p>Los datos se guardan únicamente en este navegador mediante almacenamiento local.</p>
+      <div class="notice">Privacidad: localStorage no está cifrado ni protegido como una caja fuerte. No introduzcas información sensible en un dispositivo compartido y no subas datos personales o de cartera a GitHub.</div>
+      <div class="row" style="margin-top:12px"><div><label>Empresa / ticker</label><input id="holdingName" placeholder="Ej. SAP"></div><div><label>Importe invertido (€)</label><input id="holdingAmount" type="number" min="0" step="0.01" placeholder="1000"></div></div>
+      <button class="primary" style="margin-top:12px" onclick="addHolding()">Añadir posición</button>
+      <div style="overflow-x:auto;margin-top:18px"><table><thead><tr><th>Activo</th><th>Invertido</th><th></th></tr></thead><tbody id="holdings"></tbody></table></div>
+      <div class="metric" id="total">Total: 0 €</div><button onclick="clearHoldings()">Borrar datos locales</button>
+    </div>
+  </section>
+</main>
+<footer>EURO VALUE AI · Prototipo personal. No constituye asesoramiento financiero. Verifica siempre los datos y las fuentes antes de tomar decisiones.</footer>
+<script>
+  document.querySelectorAll('[data-page]').forEach(b=>b.addEventListener('click',()=>{document.querySelectorAll('.page').forEach(p=>p.classList.add('hidden'));document.getElementById(b.dataset.page).classList.remove('hidden');document.querySelectorAll('[data-page]').forEach(x=>x.classList.toggle('active',x===b));}));
+  function preparePrompt(){const t=document.getElementById('ticker').value.trim();const s=document.getElementById('style').value;if(!t){document.getElementById('promptResult').textContent='Introduce primero un ticker o empresa.';return;}document.getElementById('promptResult').textContent=`Analiza ${t} con enfoque ${s}. Verifica datos históricos, deuda, flujo de caja, crecimiento, valoración, riesgos y catalizadores a 3–6 meses. Distingue cifras reportadas de estimaciones y cita fuentes y fechas.`;}
+  function calculateDCF(){const f=+document.getElementById('fcf').value,g=+document.getElementById('growth').value/100,d=+document.getElementById('discount').value/100,t=+document.getElementById('terminal').value/100;if(!f||d<=t||d<=0){document.getElementById('dcfResult').textContent='Revisa los supuestos (la tasa de descuento debe superar el crecimiento terminal).';return;}let pv=0,last=f;for(let y=1;y<=5;y++){last*=1+g;pv+=last/Math.pow(1+d,y);}const tv=last*(1+t)/(d-t);pv+=tv/Math.pow(1+d,5);document.getElementById('dcfResult').textContent=pv.toLocaleString('es-ES',{maximumFractionDigits:1})+' M€';}
+  function getHoldings(){try{return JSON.parse(localStorage.getItem('eva_holdings')||'[]')}catch{return []}}
+  function saveHoldings(a){localStorage.setItem('eva_holdings',JSON.stringify(a));renderHoldings()}
+  function addHolding(){const n=document.getElementById('holdingName').value.trim(),v=Number(document.getElementById('holdingAmount').value);if(!n||!Number.isFinite(v)||v<=0)return;const a=getHoldings();a.push({n,v});saveHoldings(a);document.getElementById('holdingName').value='';document.getElementById('holdingAmount').value=''}
+  function removeHolding(i){const a=getHoldings();a.splice(i,1);saveHoldings(a)}
+  function clearHoldings(){if(confirm('¿Borrar todas las posiciones guardadas en este navegador?'))saveHoldings([])}
+  function renderHoldings(){const a=getHoldings();document.getElementById('holdings').innerHTML=a.map((x,i)=>`<tr><td>${escapeHtml(x.n)}</td><td>${x.v.toLocaleString('es-ES',{style:'currency',currency:'EUR'})}</td><td><button onclick="removeHolding(${i})">Eliminar</button></td></tr>`).join('');document.getElementById('total').textContent='Total: '+a.reduce((s,x)=>s+x.v,0).toLocaleString('es-ES',{style:'currency',currency:'EUR'});}
+  function escapeHtml(s){return s.replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));}
+  renderHoldings();
+  if('serviceWorker' in navigator && location.protocol.startsWith('http'))window.addEventListener('load',()=>navigator.serviceWorker.register('./sw.js').catch(()=>{}));
+</script>
+</body></html>

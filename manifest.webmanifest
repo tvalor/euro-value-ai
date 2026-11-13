@@ -1,0 +1,10 @@
+{
+  "name": "EURO VALUE AI",
+  "short_name": "EURO VALUE",
+  "description": "Análisis personal de acciones europeas",
+  "start_url": "./",
+  "display": "standalone",
+  "background_color": "#0b1220",
+  "theme_color": "#0b1220",
+  "icons": []
+}
